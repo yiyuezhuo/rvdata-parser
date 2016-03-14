@@ -125,6 +125,12 @@ def parse(hs,index=971):
             index+=rd['diff']
         else:
             raise Exception
+    # what happen 
+    for record in stack:
+        for i in record:
+            if i[0]==9:
+                record.extend(i[1])
+                break
     return stack
 
 def extract(stack):
@@ -140,13 +146,16 @@ def extract(stack):
         rl.append(rd)
     return rl
     
-def extract_f(fname,index=971):
+def extract_f(fname,index=971,raw=False):
     f=open(fname,'rb')
     b=f.read()
     f.close()
     hs=s_to_hs(b)
     stack=parse(hs,index=index)
-    return extract(stack)
+    if raw:
+        return stack
+    else:
+        return extract(stack)
 
 
 '''
